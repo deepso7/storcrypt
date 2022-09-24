@@ -55,6 +55,7 @@ importers:
     specifiers:
       '@ethersproject/providers': ^5.7.1
       '@metamask/providers': ^9.1.0
+      '@tanstack/react-query': ^4.6.0
       '@types/node': 17.0.35
       '@types/react': 18.0.9
       '@types/react-dom': 18.0.5
@@ -73,6 +74,7 @@ importers:
     dependencies:
       '@ethersproject/providers': 5.7.1
       '@metamask/providers': 9.1.0
+      '@tanstack/react-query': 4.6.0_ef5jwxihqo6n7gxfmzogljlgcm
       '@uauth/js': 2.4.0
       axios: 0.27.2
       ethers: 5.7.1
@@ -908,6 +910,28 @@ packages:
     resolution: {integrity: sha512-rEUrBSGIoSFuYxwBYtlUFMlE2CwGhmW+w9355/5oduSw8e5h2+Tj4UrAGNNgP9915++wj5vkQo0UuOBqOAq4nw==}
     dependencies:
       tslib: 2.4.0
+    dev: false
+
+  /@tanstack/query-core/4.6.0:
+    resolution: {integrity: sha512-8b+vwooh8b4z1bIT3Ca7OVSyARM5JNbXi6F+g5VLYiflRd0AtJ+koqhin7UGhR11bbypmzVRKllWHwexWjKjDg==}
+    dev: false
+
+  /@tanstack/react-query/4.6.0_ef5jwxihqo6n7gxfmzogljlgcm:
+    resolution: {integrity: sha512-ZIx8EfRBGagxw+3onFb//Fnv0hhXDj/UHIYovPGwHdancAG9ZL4D0ymUan4cXJib/L0rGPzYFvET/yTEIPPXAw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@tanstack/query-core': 4.6.0
+      react: 18.1.0
+      react-dom: 18.1.0_react@18.1.0
+      use-sync-external-store: 1.2.0_react@18.1.0
     dev: false
 
   /@tootallnate/once/1.1.2:
