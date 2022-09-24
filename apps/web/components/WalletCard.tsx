@@ -1,12 +1,14 @@
 import React from "react";
 import { WalletType } from "../types/logintypes";
+import { login } from "../utils/login";
 
 interface Props {
   walletType: WalletType;
 }
 
 const handlelogin = async (wallet: WalletType) => {
-  console.log(wallet);
+  if (wallet === "none") return;
+  const res = await login(wallet);
 };
 
 const WalletCard: React.FC<Props> = ({ walletType }) => {
