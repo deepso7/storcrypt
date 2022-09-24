@@ -13,7 +13,7 @@ const WalletCard: React.FC<Props> = ({ walletType }) => {
   return (
     <button
       onClick={() => handlelogin(walletType)}
-      className="bg-red-300 px-2 py-1 rounded-lg"
+      className="bg-indigo-300 border border-indigo-500 rounded-md"
     >
       {walletType}
     </button>

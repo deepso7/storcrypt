@@ -5,10 +5,8 @@ import WalletLogin from "../components/WalletLogin";
 
 const Home: NextPage = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
-      {/* <button ></button>
-       */}
-      Login
+    <div className="flex h-full flex-col items-center justify-center py-2">
+      
       <WalletLogin />
     </div>
   );
