@@ -6,7 +6,11 @@
     "start": "next start"
   },
   "dependencies": {
-    "ethers": "^5.5.1",
+    "@ethersproject/providers": "^5.7.1",
+    "@metamask/providers": "^9.1.0",
+    "@uauth/js": "^2.4.0",
+    "axios": "^0.27.2",
+    "ethers": "^5.7.1",
     "next": "latest",
     "react": "18.1.0",
     "react-dom": "18.1.0",
