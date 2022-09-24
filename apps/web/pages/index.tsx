@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Image from "next/image";
 import useRootStore from "../store/useRootStore";
 
 
@@ -15,6 +16,7 @@ const Home: NextPage = () => {
       {
         loggenIn ? "I am In!" : "I am out :("
       }
+      <Image src='/crypt4.png' className="select-none" height={600} width={600} />
     </div>
   );
 };

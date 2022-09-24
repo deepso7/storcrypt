@@ -7,7 +7,6 @@ const Footer = () => {
         <span className='text-lg font-semibold'>Made with 💙 by Ramit, Deepso and Vatsal</span>
         <div className='flex gap-5 justify-evenly'>
             <Link href='./about'><a>Github</a></Link>
-            <Link href='./about'><a>About</a></Link>
             <Link href='./about'><a>Team</a></Link>
         </div>
     </div>
