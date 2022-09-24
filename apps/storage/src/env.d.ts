@@ -3,8 +3,9 @@ declare global {
     interface ProcessEnv {
       PORT: string;
       ETH_PRIVATE_KEY: string;
+      ALCHEMY_KEY: string;
     }
   }
 }
 
-export {};
+export {}
