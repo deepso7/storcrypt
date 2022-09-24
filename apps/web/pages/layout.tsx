@@ -10,7 +10,9 @@ const Layout: React.FC<Props> = ({ children }) => {
     return (
         <div className='min-h-screen flex flex-col justify-between'>
             <Navbar />
+            <div className='flex-1'>
             {children}
+            </div>
             <Footer />
         </div>
     )
