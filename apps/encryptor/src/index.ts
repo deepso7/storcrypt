@@ -3,7 +3,8 @@ dotenv.config();
 
 import app from "./app";
 
-const PORT = 4000;
+// eslint-disable-next-line turbo/no-undeclared-env-vars
+const PORT = parseInt(process.env.PORT);
 
 (() => {
   app.listen(PORT, () => {
