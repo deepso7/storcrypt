@@ -10,9 +10,9 @@ class Encryptor {
   secret: string;
   key: string;
 
-  constructor({ algorithm, secret }: Config) {
-    this.algorithm = algorithm || "aes-256-ctr";
-    this.secret = secret || "MySuperSecretKey";
+  constructor(config: Config = {}) {
+    this.algorithm = config.algorithm || "aes-256-ctr";
+    this.secret = config.secret || "MySuperSecretKey";
     this.key = crypto
       .createHash("sha256")
       .update(this.secret)
