@@ -1,1 +1,1 @@
-export type WalletType = "siwe" | "lens" | "ud" | "none";
+export type WalletType = "siwe" | "lens" | "ud";

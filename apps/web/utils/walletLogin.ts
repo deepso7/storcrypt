@@ -124,13 +124,13 @@ const siweLogin = async () => {
     return { address: "", did: " " };
   }
 };
-export const walletLogin = (walletType: string) => {
-  const login: Record<string, () => Promise<{ address: string; did: string }>> =
-    {
-      lens: lensLogin,
-      ud: udLogin,
-      siwe: siweLogin,
-    };
+
+export const walletLogin = (walletType: "lens" | "ud" | "siwe") => {
+  const login = {
+    lens: lensLogin,
+    ud: udLogin,
+    siwe: siweLogin,
+  };
 
   return login[walletType]();
 };
