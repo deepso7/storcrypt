@@ -6,12 +6,14 @@ import WalletCard from "./WalletCard";
 const WalletLogin: React.FC = () => {
   return (
     <>
-      <span className="text-2xl font-bold mb-10">Login</span>
+      <span className="text-2xl font-bold ">Login</span>
       <div className="h-56 w-56 gap-y-2 grid-rows-2 grid-cols-2 grid gap-2 ">
         <WalletCard walletType="lens" />
         <WalletCard walletType="ud" />
         <WalletCard walletType="siwe" />
-        <WalletCard walletType="none" />
+        <button className="bg-indigo-300 border border-indigo-500 rounded-md">
+          Don't have Wallet
+        </button>
       </div>
     </>
   );

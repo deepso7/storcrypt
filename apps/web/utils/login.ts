@@ -9,6 +9,8 @@ export const login = async (wallet: WalletType) => {
     const { address, did } = await walletLogin(wallet);
 
     setAddress(address);
+    setLogIn();
+    setDid(did);
     return address;
   } catch (e) {
     console.error(e);
