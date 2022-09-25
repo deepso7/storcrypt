@@ -61,3 +61,28 @@ export const uploadHandler = async (req: Request, res: Response) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+export const donwloadHandler = async (req: Request, res: Response) => {
+  const { cid, key } = req.body;
+
+  if (!cid || !key)
+    return res.status(400).json({ message: "Missing cid or key" });
+
+  try {
+    const file = await web3Storage.get(cid);
+
+    if (!file)
+      return res.status(404).json({ message: "File not found, invalid cid" });
+
+    const buf = await file.arrayBuffer();
+
+    const decryptedFile = encryptor.decrypt(Buffer.from(buf), key);
+
+    //TODO: send this file
+    return res.json({ data: "hi" });
+  } catch (err) {
+    console.error(err);
+
+    return res.status(500).json({ message: err.message });
+  }
+};

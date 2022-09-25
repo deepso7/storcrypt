@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { bufferToHex } from "ethereumjs-util";
 import { encrypt } from "@metamask/eth-sig-util";
 
-import { getState } from "../store/useStore";
+import useStore, { getState } from "../store/useStore";
 import toast from "react-hot-toast";
 
 const useFileUploadMutation = () => {
@@ -58,6 +58,29 @@ const useFileUploadMutation = () => {
       },
     }
   );
+};
+
+export const useFiles = () => {
+  const { address } = useStore();
+
+  return useQuery<UserData[]>(["files"], async () => {
+    if (address === "") return [];
+
+    const res = await fetch(
+      `https://testnet.tableland.network/query?s=SELECT * FROM files_80001_3098 where address = '${address}'`
+    );
+
+    return res.json();
+  });
+};
+
+export type UserData = {
+  id: number;
+  address: string;
+  cid: string;
+  filename: string;
+  size: string;
+  encryptedKey: string;
 };
 
 export default useFileUploadMutation;

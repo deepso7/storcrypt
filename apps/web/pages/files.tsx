@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
 import useStore from "../store/useStore";
 import type { NextPage } from "next";
 import UploadButton from "../components/UploadButton";
+import TableIcons from "../assets/TableIcons";
+import { useFiles } from "../hooks/useFileUpload";
 
 type UserData = {
   id: number;
@@ -14,9 +14,6 @@ type UserData = {
 };
 
 const table: NextPage = () => {
-  const { address } = useStore();
-  const [data, setData] = useState<UserData[]>([]);
-
   const handledecrypt = async (user: UserData) => {
     try {
       if (!window.ethereum) throw new Error("wallet not dounf");
@@ -31,20 +28,7 @@ const table: NextPage = () => {
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      const { data: userdata } = await axios.request({
-        method: "GET",
-        url: `https://testnet.tableland.network/query?s=SELECT * FROM files_80001_3098 where address = '${address}'`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      setData(userdata);
-      console.log({ address, userdata });
-    })();
-  }, [address]);
+  const { data } = useFiles();
 
   return (
     <div className="flex flex-col justify-center items-center gap-10 max-w-full mx-10 ">
@@ -60,14 +44,18 @@ const table: NextPage = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((user, i) => (
+          {data?.map((user, i) => (
             <tr key={i}>
               <th>{i + 1}</th>
               <th>{user.address}</th>
               <th>
                 {user.cid}{" "}
-                <button type="button" onClick={() => handledecrypt(user)}>
-                  decrypt
+                <button
+                  type="button"
+                  className="bg-white w-4 h-4 ml-3 "
+                  onClick={() => handledecrypt(user)}
+                >
+                  <span>{TableIcons.download}</span>
                 </button>
               </th>
               <th>{user.filename}</th>
