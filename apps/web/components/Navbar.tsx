@@ -1,14 +1,14 @@
 
 import Link from "next/link";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import React from "react";
-import { getState } from "../store/useStore";
+import useStore from "../store/useStore";
 import WalletButton from "./WalletButton";
 
 const Navbar = () => {
   const router = useRouter();
 
-  const { loggenIn } = getState()
+  const { loggenIn } = useStore()
 
   return (
     <>
