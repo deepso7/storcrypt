@@ -63,7 +63,7 @@ const About = () => {
       </div>
       <div>
         <Image
-          src="/crypt4.png"
+          src="/crypt7.png"
           className="select-none"
           height={600}
           width={600}
