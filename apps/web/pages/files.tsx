@@ -3,6 +3,7 @@ import axios from "axios";
 import useStore from "../store/useStore";
 import type { NextPage } from "next";
 import UploadButton from "../components/UploadButton";
+import TableIcons from "../assets/TableIcons";
 
 type UserData = {
   id: number;
@@ -66,8 +67,12 @@ const table: NextPage = () => {
               <th>{user.address}</th>
               <th>
                 {user.cid}{" "}
-                <button type="button" onClick={() => handledecrypt(user)}>
-                  decrypt
+                <button
+                  type="button"
+                  className="bg-white w-4 h-4 ml-3 "
+                  onClick={() => handledecrypt(user)}
+                >
+                  <span>{TableIcons.download}</span>
                 </button>
               </th>
               <th>{user.filename}</th>
