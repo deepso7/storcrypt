@@ -40,10 +40,10 @@ const About = () => {
             <p className='text-lg font-medium'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias enim dolorem dolores hic eaque harum fugiat blanditiis odit sit! Maiores facere eum distinctio sunt corporis earum deleniti aliquid reiciendis nihil!</p>
             <div className='flex items-center gap-5 mt-10'>
                 <span className='text-xl font-semibold italic'>Technologies we use:</span>
-                <div className='flex gap-2'>
+                <div className='flex flex-wrap max-w-full gap-2'>
                 {
                     tech.map((item) => (
-                        <span className='p-3 bg--400 bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white  rounded-lg text-center font-medium'>
+                        <span key={item.name} className='p-3 bg--400 bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white  rounded-lg text-center font-medium'>
                             <a href={item.url} target='_blank'>
                             {item.name}
                             </a>

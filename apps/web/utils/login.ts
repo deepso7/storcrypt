@@ -7,12 +7,20 @@ export const login = async (wallet: WalletType) => {
 
   try {
     const { address, did } = await walletLogin(wallet);
+    console.log(wallet, address, did)
 
-    setAddress(address);
-    setLogIn();
-    setDid(did);
+    
+ 
+      console.log(wallet, address, did)
+      setAddress(address);
+      setDid(did);
+      setLogIn(true);
+        
+    
+
     return address;
   } catch (e) {
-    console.error(e);
+      setLogIn(false);
+      console.error(e);
   }
 };

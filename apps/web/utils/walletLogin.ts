@@ -125,7 +125,7 @@ const siweLogin = async () => {
   }
 };
 
-export const walletLogin = (walletType: "lens" | "ud" | "siwe") => {
+export const walletLogin = (walletType: "lens" | "ud" | "siwe"): Promise<{address: string, did: string}> => {
   const login = {
     lens: lensLogin,
     ud: udLogin,

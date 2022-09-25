@@ -5,7 +5,7 @@ export interface addressSlice {
   loggenIn: boolean;
   did: string;
   setAddress: (arg: string) => void;
-  setLogIn: () => void;
+  setLogIn: (arg: boolean) => void;
   setDid: (did: string) => void;
 }
 
@@ -17,7 +17,7 @@ const createAddressSlice: StateCreator<addressSlice, [], [], addressSlice> = (
   did: "",
   setDid: (did: string) => set((state) => ({ did: did })),
   setAddress: (add: string) => set((state) => ({ address: add })),
-  setLogIn: () => set((state) => ({ loggenIn: !state.loggenIn })),
+  setLogIn: (log: boolean) => set((state) => ({ loggenIn: log })),
 });
 
 export default createAddressSlice;
