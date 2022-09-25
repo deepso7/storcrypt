@@ -1,4 +1,3 @@
-import { resultsToObjects } from "@tableland/sdk";
 import { Request, Response } from "express";
 
 import tableland from "../lib/Tableland";
@@ -9,36 +8,7 @@ export const createTable = async (req: Request, res: Response) => {
   if (!prefix) return res.status(400).json({ message: "prefix is required" });
 
   try {
-    const data = await tableland.create(
-      `
-      id integer primary key, 
-      address text,
-      cid text,
-      encryptedKey text,
-      filename text,
-      size integer
-    `,
-      {
-        prefix,
-      }
-    );
-
-    return res.json({ data });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: error.message });
-  }
-};
-
-export const insertHandler = async (req: Request, res: Response) => {
-  const { table } = req.body;
-
-  if (!table) return res.status(400).json({ message: "table is required" });
-
-  try {
-    const data = await tableland.write(
-      `INSERT INTO ${process.env.TABLE_NAME} (id, name) VALUES (0, 'Ramit');`
-    );
+    const data = await tableland.createTable(prefix);
 
     return res.json({ data });
   } catch (error) {
@@ -48,14 +18,13 @@ export const insertHandler = async (req: Request, res: Response) => {
 };
 
 export const readHandler = async (req: Request, res: Response) => {
-  const { name } = req.query;
+  const { address } = req.query;
 
-  if (!name) return res.status(400).json({ message: "name is required" });
+  if (typeof address !== "string")
+    return res.status(400).json({ message: "address is required" });
 
   try {
-    const results = await tableland.read(`SELECT * FROM ${name} WHERE id = 0;`);
-    const entries = resultsToObjects(results);
-
+    const entries = await tableland.read(address);
     return res.json({ entries });
   } catch (err) {
     console.error(err);

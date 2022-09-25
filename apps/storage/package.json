@@ -23,6 +23,7 @@
     "helmet": "^6.0.0",
     "isomorphic-fetch": "^3.0.0",
     "keccak": "^3.0.2",
+    "nanoid": "3.3.4",
     "streamr-client": "^6.0.9"
   },
   "devDependencies": {
