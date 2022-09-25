@@ -20,7 +20,7 @@ const Navbar = () => {
           🔒<b>StorCrypt</b>
         </span>
         <div className="flex gap-6 text-xl items-center justify-evenly">
-          <Link href="./team">
+          <Link href="https://github.com/deepso7/storcrypt">
             <a target="_blank">Github</a>
           </Link>
           <Link href="./team">
