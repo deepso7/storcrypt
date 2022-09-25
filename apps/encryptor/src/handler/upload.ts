@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { File } from "web3.storage";
 import { z } from "zod";
+import stream from "stream";
 
 import Encryptor from "../lib/Encryptor";
 import Streamr from "../lib/Streamr";
@@ -63,9 +64,9 @@ export const uploadHandler = async (req: Request, res: Response) => {
 };
 
 export const donwloadHandler = async (req: Request, res: Response) => {
-  const { cid, key } = req.body;
+  const { cid, key, filename } = req.query;
 
-  if (!cid || !key)
+  if (typeof cid !== "string" || typeof key !== "string")
     return res.status(400).json({ message: "Missing cid or key" });
 
   try {
@@ -74,12 +75,23 @@ export const donwloadHandler = async (req: Request, res: Response) => {
     if (!file)
       return res.status(404).json({ message: "File not found, invalid cid" });
 
-    const buf = await file.arrayBuffer();
+    const f = await file.files();
+
+    const buf = await f[0].arrayBuffer();
 
     const decryptedFile = encryptor.decrypt(Buffer.from(buf), key);
 
-    //TODO: send this file
-    return res.json({ data: "hi" });
+    console.log({ decryptedFile });
+
+    const readStream = new stream.PassThrough();
+
+    readStream.end(decryptedFile);
+
+    res.set("Content-disposition", "attachment; filename=" + filename);
+    res.set("Content-Type", "image/png");
+
+    readStream.pipe(res);
+    return;
   } catch (err) {
     console.error(err);
 

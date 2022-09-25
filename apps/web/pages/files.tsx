@@ -28,42 +28,46 @@ const table: NextPage = () => {
     }
   };
 
-  const { data } = useFiles();
+  const { data, isLoading } = useFiles();
 
   return (
     <div className="flex flex-col justify-center items-center gap-10 max-w-full mx-10 ">
       <UploadButton />
-      <table className="table w-full">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Address</th>
-            <th>CID</th>
-            <th>Filename</th>
-            <th>Size</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.map((user, i) => (
-            <tr key={i}>
-              <th>{i + 1}</th>
-              <th>{user.address}</th>
-              <th>
-                {user.cid}{" "}
-                <button
-                  type="button"
-                  className="bg-white w-4 h-4 ml-3 "
-                  onClick={() => handledecrypt(user)}
-                >
-                  <span>{TableIcons.download}</span>
-                </button>
-              </th>
-              <th>{user.filename}</th>
-              <th>{user.size}</th>
+      {isLoading ? (
+        <div>loading</div>
+      ) : (
+        <table className="table w-full">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Address</th>
+              <th>CID</th>
+              <th>Filename</th>
+              <th>Size</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {data?.map((user, i) => (
+              <tr key={i}>
+                <th>{i + 1}</th>
+                <th>{user.address}</th>
+                <th>
+                  {user.cid}{" "}
+                  <button
+                    type="button"
+                    className="bg-white w-4 h-4 ml-3 "
+                    onClick={() => handledecrypt(user)}
+                  >
+                    <span>{TableIcons.download}</span>
+                  </button>
+                </th>
+                <th>{user.filename}</th>
+                <th>{user.size}</th>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
