@@ -55,7 +55,8 @@ const lensLogin = async () => {
     return { address, did: lensprofiles[0] };
   } catch (e) {
     console.error(e);
-    return { address: "", did: "" };
+    // return { address: "", did: "" };
+    throw new Error("Wallet Connection Error");
   }
 };
 
@@ -79,7 +80,8 @@ const udLogin = async () => {
     return { address: wallet_address, did: sub };
   } catch (error) {
     console.error(error);
-    return { address: "", did: "" };
+    // return { address: "", did: "" };
+    throw new Error("Wallet Connection Error");
   }
 };
 
@@ -121,7 +123,7 @@ const siweLogin = async () => {
     return { address, did: name };
   } catch (e) {
     console.error(e);
-    return { address: "", did: " " };
+    throw new Error("Wallet Connection Error");
   }
 };
 

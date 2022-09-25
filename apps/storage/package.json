@@ -23,7 +23,9 @@
     "helmet": "^6.0.0",
     "isomorphic-fetch": "^3.0.0",
     "keccak": "^3.0.2",
-    "streamr-client": "^6.0.9"
+    "nanoid": "3.3.4",
+    "streamr-client": "^6.0.9",
+    "zod": "^3.19.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",

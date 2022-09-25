@@ -25,7 +25,7 @@ const WalletButton = () => {
         <div>
             <Dialog.Root open={isOpen} onOpenChange={setIsOpen}>
                 <Dialog.Trigger asChild>
-                    <button className={`bg-green-300 p-3 rounded-lg font-semibold ${loggenIn ? 'hover:bg-red-500' : ''}`} onClick={() => { logout() }}> {
+                    <button className={`bg-green-500 p-3 rounded-lg font-semibold ${loggenIn ? 'hover:bg-red-500' : ''}`} onClick={() => { logout() }}> {
                         loggenIn ? (
                             <>
                                 {
@@ -42,7 +42,7 @@ const WalletButton = () => {
                     } </button>
                 </Dialog.Trigger>
                 {/* <Dialog.Overlay className='z-20 inset fixed backdrop-blur-md' /> */}
-                <Dialog.Content className='fixed z-50 border border-slate-400 bg-slate-200 w-[95vw] max-w-xl rounded-lg p-4 md:w-full top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] backdrop-blur-md shadow-lg '>
+                <Dialog.Content className='fixed z-50 p-8 bg-slate-900 w-[95vw] max-w-xl rounded-lg md:w-full top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] backdrop-blur-md shadow-lg '>
                     <Dialog.Title className='font-bold mb-5'>
                         Log In via:
                     </Dialog.Title>

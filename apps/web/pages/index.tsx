@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import About from "../components/About";
 import Hero from "../components/Hero";
-import WalletButton from "../components/WalletButton";
 import WalletLogin from "../components/WalletLogin";
 import useStore from "../store/useStore";
 

@@ -2,11 +2,8 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 
-import {
-  createTable,
-  insertHandler,
-  readHandler,
-} from "./handler/tablelandHandler";
+import { createTable, readHandler } from "./handler/tablelandHandler";
+import Streamr from "./lib/Streamr";
 
 const app = express();
 
@@ -17,7 +14,9 @@ app.use(express.json());
 app.get("/", (_req, res) => res.json({ message: "Hello World!" }));
 
 app.post("/create-table", createTable);
-app.post("/insert", insertHandler);
 app.get("/read", readHandler);
+
+const streamr = new Streamr();
+streamr.subscribe("0xd319649206db744a01b90a6bac53cdeefb787fd4/storcrypt");
 
 export default app;

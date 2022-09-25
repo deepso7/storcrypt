@@ -1,9 +1,9 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
 import { MessageStreamOnMessage, StreamrClient } from "streamr-client";
+import tableland from "./Tableland";
 
 class Streamr {
   private client: StreamrClient;
-  private streamId: string;
 
   constructor() {
     this.client = new StreamrClient({
@@ -11,19 +11,21 @@ class Streamr {
         privateKey: process.env.ETH_PRIVATE_KEY,
       },
     });
-
-    this.streamId = "0xd319649206db744a01b90a6bac53cdeefb787fd4/storcrypt";
-    this.client.subscribe(this.streamId, this.onMessage);
-
-    this.publish({ hi: "hey" });
   }
 
-  async publish(data: any) {
-    await this.client.publish(this.streamId, data);
+  async publish(streamId: string, data: any) {
+    await this.client.publish(streamId, data);
   }
 
-  onMessage: MessageStreamOnMessage<any> = (msg) => {
-    console.log("msg recieved", { msg });
+  async subscribe(streamId: string) {
+    await this.client.subscribe(streamId, this.onMessage);
+  }
+
+  onMessage: MessageStreamOnMessage<any> = async (msg) => {
+    console.log(msg);
+    if (msg.type === "file-uploaded") {
+      await tableland.insert(msg);
+    }
   };
 }
 

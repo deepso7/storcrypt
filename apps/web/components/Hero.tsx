@@ -6,7 +6,7 @@ const Hero = () => {
     const { setAddress, address, setLogIn, loggenIn, did } = useStore();
 
     return (
-        <div className="w-full grid grid-cols-2 place-items-center gap-8 py-12 h-56 rounded-xl bg-gradient-to-r from-purple-200 via-purple-400 to-purple-800 ">
+        <div className="w-full grid grid-cols-2 place-items-center gap-8 py-12 h-56 rounded-xl text-black bg-gradient-to-r from-purple-200 via-purple-400 to-purple-800 ">
             <div className="flex flex-col items-center gap-2">
                 <span className="text-5xl  font-extrabold">Welcome to StorCrypt!</span>
                 <span className="text-xl font-medium">

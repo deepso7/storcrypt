@@ -1,36 +1,89 @@
 import "isomorphic-fetch";
 import { Wallet, providers } from "ethers";
-import { connect } from "@tableland/sdk";
+import { connect, Connection, resultsToObjects } from "@tableland/sdk";
+import { z } from "zod";
 
-const privateKey = process.env.ETH_PRIVATE_KEY;
-
-const wallet = new Wallet(privateKey);
-
-const provider = new providers.AlchemyProvider(
-  "maticmum",
-  process.env.ALCHEMY_KEY
-);
-
-const signer = wallet.connect(provider);
-
-const tableland = connect({
-  signer,
-  network: "testnet",
-  chain: "polygon-mumbai",
+const insertValidator = z.object({
+  address: z.string(),
+  cid: z.string(),
+  encryptedKey: z.string(),
+  filename: z.string(),
+  size: z.number(),
 });
 
-export default tableland;
+class Tableland {
+  tableland: Connection;
+  private provider: providers.AlchemyProvider;
+  private signer: Wallet;
+  private wallet: Wallet;
 
-// (async () => {
-// const { name } = await tableland.create(
-//   `id integer primary key, name text`, // Table schema definition
-//   {
-//     prefix: `test_table`, // Optional `prefix` used to define a human-readable string
-//   }
-// );
-// const writeRes = await tableland.write(
-//   `INSERT INTO test_table_80001_2971 (id, name) VALUES (8, 'Bobby Tables');`
-// );
-// console.log({ writeRes });
-// The table's `name` is in the format `{prefix}_{chainId}_{tableId}`
-// })();
+  constructor() {
+    const privateKey = process.env.ETH_PRIVATE_KEY;
+    this.wallet = new Wallet(privateKey);
+    this.provider = new providers.AlchemyProvider(
+      "maticmum",
+      process.env.ALCHEMY_KEY
+    );
+    this.signer = this.wallet.connect(this.provider);
+
+    this.tableland = connect({
+      signer: this.signer,
+      network: "testnet",
+      chain: "polygon-mumbai",
+    });
+  }
+
+  async createTable(prefix: string) {
+    const data = await this.tableland.create(
+      `
+      id integer primary key, 
+      address text,
+      cid text,
+      encryptedKey text,
+      filename text,
+      size integer
+    `,
+      {
+        prefix,
+      }
+    );
+
+    return data;
+  }
+
+  async insert(data: any) {
+    try {
+      const d = insertValidator.parse(data);
+
+      const res = await this.tableland.write(
+        `
+          INSERT INTO ${process.env.TABLE_NAME} (address, cid, encryptedKey, filename, size) 
+          VALUES ('${d.address}', '${d.cid}', '${d.encryptedKey}', '${d.filename}', '${d.size}');
+        `
+      );
+
+      console.log({ res });
+
+      return res;
+    } catch (err) {
+      console.error(err);
+      return;
+    }
+  }
+
+  async read(address: string) {
+    try {
+      const results = await this.tableland.read(
+        `SELECT * FROM ${process.env.TABLE_NAME} WHERE address = ${address};`
+      );
+      const entries = resultsToObjects(results);
+
+      return entries;
+    } catch (err) {
+      console.error(err);
+      return;
+    }
+  }
+}
+
+export default new Tableland();
