@@ -1,7 +1,15 @@
 import "isomorphic-fetch";
 import { Wallet, providers } from "ethers";
 import { connect, Connection, resultsToObjects } from "@tableland/sdk";
-import { nanoid } from "nanoid";
+import { z } from "zod";
+
+const insertValidator = z.object({
+  address: z.string(),
+  cid: z.string(),
+  encryptedKey: z.string(),
+  filename: z.string(),
+  size: z.number(),
+});
 
 class Tableland {
   tableland: Connection;
@@ -43,15 +51,18 @@ class Tableland {
     return data;
   }
 
-  async insert(data: InsertData) {
-    const id = nanoid();
+  async insert(data: any) {
     try {
+      const d = insertValidator.parse(data);
+
       const res = await this.tableland.write(
         `
-          INSERT INTO ${process.env.TABLE_NAME} (id, address, cid, encryptedKey, filename, size) 
-          VALUES (${id}, ${data.address}, ${data.cid}, ${data.encryptedKey}, ${data.filename}, ${data.size});
+          INSERT INTO ${process.env.TABLE_NAME} (address, cid, encryptedKey, filename, size) 
+          VALUES ('${d.address}', '${d.cid}', '${d.encryptedKey}', '${d.filename}', '${d.size}');
         `
       );
+
+      console.log({ res });
 
       return res;
     } catch (err) {
@@ -76,11 +87,3 @@ class Tableland {
 }
 
 export default new Tableland();
-
-type InsertData = {
-  address: string;
-  cid: string;
-  encryptedKey: string;
-  filename: string;
-  size: number;
-};

@@ -43,22 +43,20 @@ export const uploadHandler = async (req: Request, res: Response) => {
   try {
     const cid = await web3Storage.put(f, { name: file.name });
 
-    await streamr.publish({
-      name: file.name,
-      cid,
-      size: file.size,
-      key: body.secret,
-      address: body.address,
-    });
-
-    return res.json({
-      type: "file-uploaded",
+    const response = {
       address: body.address,
       cid,
       encryptedKey: body.secret,
       filename: file.name,
       size: file.size,
+    };
+
+    await streamr.publish({
+      type: "file-uploaded",
+      ...response,
     });
+
+    return res.json(response);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
