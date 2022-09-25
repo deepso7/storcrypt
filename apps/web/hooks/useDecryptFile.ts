@@ -11,10 +11,10 @@ const useDecryptFile = () => {
         params: [user.encryptedKey, user.address],
       });
 
-      const obj = {
-        cid: user.cid,
-        key: res,
-      };
+      window.open(
+        `http://localhost:4000/api/download?cid=${user.cid}&key=${res}&filename=${user.filename}`,
+        "_blank"
+      );
     },
     {
       onError: (error) => {

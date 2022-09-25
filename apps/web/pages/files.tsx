@@ -3,6 +3,7 @@ import type { NextPage } from "next";
 import UploadButton from "../components/UploadButton";
 import TableIcons from "../assets/TableIcons";
 import { useFiles } from "../hooks/useFileUpload";
+import useDecryptFile from "../hooks/useDecryptFile";
 
 type UserData = {
   id: number;
@@ -14,20 +15,7 @@ type UserData = {
 };
 
 const table: NextPage = () => {
-  const handledecrypt = async (user: UserData) => {
-    try {
-      if (!window.ethereum) throw new Error("wallet not dounf");
-      const res = await window.ethereum.request?.({
-        method: "eth_decrypt",
-        params: [user.encryptedKey, user.address],
-      });
-
-      console.log({ res });
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
+  const { mutate } = useDecryptFile();
   const { data, isLoading } = useFiles();
 
   return (
@@ -56,7 +44,7 @@ const table: NextPage = () => {
                   <button
                     type="button"
                     className="bg-white w-4 h-4 ml-3 "
-                    onClick={() => handledecrypt(user)}
+                    onClick={() => mutate(user)}
                   >
                     <span>{TableIcons.download}</span>
                   </button>
