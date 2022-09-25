@@ -4,6 +4,7 @@ declare global {
       PORT: string;
       ETH_PRIVATE_KEY: string;
       ALCHEMY_KEY: string;
+      TABLE_NAME: string;
     }
   }
 }

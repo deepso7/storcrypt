@@ -9,9 +9,19 @@ export const createTable = async (req: Request, res: Response) => {
   if (!prefix) return res.status(400).json({ message: "prefix is required" });
 
   try {
-    const data = await tableland.create(`id integer primary key, name text`, {
-      prefix,
-    });
+    const data = await tableland.create(
+      `
+      id integer primary key, 
+      address text,
+      cid text,
+      encryptedKey text,
+      filename text,
+      size integer
+    `,
+      {
+        prefix,
+      }
+    );
 
     return res.json({ data });
   } catch (error) {
@@ -27,7 +37,7 @@ export const insertHandler = async (req: Request, res: Response) => {
 
   try {
     const data = await tableland.write(
-      `INSERT INTO ${table} (id, name) VALUES (0, 'Ramit');`
+      `INSERT INTO ${process.env.TABLE_NAME} (id, name) VALUES (0, 'Ramit');`
     );
 
     return res.json({ data });

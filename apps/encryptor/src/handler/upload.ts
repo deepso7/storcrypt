@@ -51,7 +51,14 @@ export const uploadHandler = async (req: Request, res: Response) => {
       address: body.address,
     });
 
-    return res.json({ message: "Uploaded", cid, size: file.size });
+    return res.json({
+      type: "file-uploaded",
+      address: body.address,
+      cid,
+      encryptedKey: body.secret,
+      filename: file.name,
+      size: file.size,
+    });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
