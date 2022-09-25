@@ -1,36 +1,86 @@
 import "isomorphic-fetch";
 import { Wallet, providers } from "ethers";
-import { connect } from "@tableland/sdk";
+import { connect, Connection, resultsToObjects } from "@tableland/sdk";
+import { nanoid } from "nanoid";
 
-const privateKey = process.env.ETH_PRIVATE_KEY;
+class Tableland {
+  tableland: Connection;
+  private provider: providers.AlchemyProvider;
+  private signer: Wallet;
+  private wallet: Wallet;
 
-const wallet = new Wallet(privateKey);
+  constructor() {
+    const privateKey = process.env.ETH_PRIVATE_KEY;
+    this.wallet = new Wallet(privateKey);
+    this.provider = new providers.AlchemyProvider(
+      "maticmum",
+      process.env.ALCHEMY_KEY
+    );
+    this.signer = this.wallet.connect(this.provider);
 
-const provider = new providers.AlchemyProvider(
-  "maticmum",
-  process.env.ALCHEMY_KEY
-);
+    this.tableland = connect({
+      signer: this.signer,
+      network: "testnet",
+      chain: "polygon-mumbai",
+    });
+  }
 
-const signer = wallet.connect(provider);
+  async createTable(prefix: string) {
+    const data = await this.tableland.create(
+      `
+      id integer primary key, 
+      address text,
+      cid text,
+      encryptedKey text,
+      filename text,
+      size integer
+    `,
+      {
+        prefix,
+      }
+    );
 
-const tableland = connect({
-  signer,
-  network: "testnet",
-  chain: "polygon-mumbai",
-});
+    return data;
+  }
 
-export default tableland;
+  async insert(data: InsertData) {
+    const id = nanoid();
+    try {
+      const res = await this.tableland.write(
+        `
+          INSERT INTO ${process.env.TABLE_NAME} (id, address, cid, encryptedKey, filename, size) 
+          VALUES (${id}, ${data.address}, ${data.cid}, ${data.encryptedKey}, ${data.filename}, ${data.size});
+        `
+      );
 
-// (async () => {
-// const { name } = await tableland.create(
-//   `id integer primary key, name text`, // Table schema definition
-//   {
-//     prefix: `test_table`, // Optional `prefix` used to define a human-readable string
-//   }
-// );
-// const writeRes = await tableland.write(
-//   `INSERT INTO test_table_80001_2971 (id, name) VALUES (8, 'Bobby Tables');`
-// );
-// console.log({ writeRes });
-// The table's `name` is in the format `{prefix}_{chainId}_{tableId}`
-// })();
+      return res;
+    } catch (err) {
+      console.error(err);
+      return;
+    }
+  }
+
+  async read(address: string) {
+    try {
+      const results = await this.tableland.read(
+        `SELECT * FROM ${process.env.TABLE_NAME} WHERE address = ${address};`
+      );
+      const entries = resultsToObjects(results);
+
+      return entries;
+    } catch (err) {
+      console.error(err);
+      return;
+    }
+  }
+}
+
+export default new Tableland();
+
+type InsertData = {
+  address: string;
+  cid: string;
+  encryptedKey: string;
+  filename: string;
+  size: number;
+};

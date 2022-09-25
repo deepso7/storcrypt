@@ -23,7 +23,9 @@ class Streamr {
   }
 
   onMessage: MessageStreamOnMessage<any> = (msg) => {
-    console.log("msg recieved", { msg });
+    if (msg.type === "file-uploaded") {
+      console.log(msg);
+    }
   };
 }
 
