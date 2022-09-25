@@ -28,7 +28,7 @@ const UploadButton = () => {
       }`}
       onClick={() => fileRef.current?.click()}
     >
-      {isLoading ? (
+      {!isLoading ? (
         <>
           <input
             ref={fileRef}
