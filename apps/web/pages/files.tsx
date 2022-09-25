@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import useStore from "../store/useStore";
 import type { NextPage } from "next";
+import UploadButton from "../components/UploadButton";
 
 type UserData = {
   id: number;
@@ -46,7 +47,8 @@ const table: NextPage = () => {
   }, [address]);
 
   return (
-    <div className="w-3/4 justify-center mx-10 ">
+    <div className="flex flex-col justify-center items-center gap-10 max-w-full mx-10 ">
+      <UploadButton />
       <table className="table w-full">
         <thead>
           <tr>

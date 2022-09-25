@@ -10,14 +10,22 @@ const handlelogin = async (wallet: WalletType) => {
   const res = await login(wallet);
 };
 
+// const stylediv = (walletType: WalletType) => {
+//   switch (walletType) {
+//     case (walletType === 'lens') {
+//       return ``
+//     }
+//   }
+// }
+
 const WalletCard: React.FC<Props> = ({ walletType }) => {
   return (
-    <button
+    <div
       onClick={() => handlelogin(walletType)}
-      className="bg-indigo-300 border border-indigo-500 rounded-md"
+      className="bg-blue-500 text-xl font-bold rounded-lg w-40 aspect-square flex justify-center items-center"
     >
       <p className="text-white"> {walletType.toUpperCase()}</p>
-    </button>
+    </div>
   );
 };
 

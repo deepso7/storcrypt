@@ -3,6 +3,7 @@ import { bufferToHex } from "ethereumjs-util";
 import { encrypt } from "@metamask/eth-sig-util";
 
 import { getState } from "../store/useStore";
+import toast from "react-hot-toast";
 
 const useFileUploadMutation = () => {
   return useMutation(
@@ -52,7 +53,7 @@ const useFileUploadMutation = () => {
     },
     {
       onError: (error) => {
-        alert("Error uploading file");
+        toast.error("Error uploading file");
         console.error(error);
       },
     }

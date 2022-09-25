@@ -11,12 +11,8 @@ const Home: NextPage = () => {
 
   return (
     <div className="h-full flex flex-col justify-start gap-20 px-20">
-      {loggenIn ? <Hero /> : <WalletLogin />}
+      <Hero />
       <About />
-
-      <Link href="/table">
-        <a className="text-white">About Us</a>
-      </Link>
     </div>
   );
 };
