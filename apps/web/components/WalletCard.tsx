@@ -16,7 +16,7 @@ const WalletCard: React.FC<Props> = ({ walletType }) => {
       onClick={() => handlelogin(walletType)}
       className="bg-indigo-300 border border-indigo-500 rounded-md"
     >
-      {walletType.toUpperCase()}
+      <p className="text-white"> {walletType.toUpperCase()}</p>
     </button>
   );
 };

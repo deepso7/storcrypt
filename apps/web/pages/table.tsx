@@ -3,31 +3,53 @@ import axios from "axios";
 import useStore from "../store/useStore";
 import type { NextPage } from "next";
 
+type UserData = {
+  id: number;
+  address: string;
+  cid: string;
+  filename: string;
+  size: string;
+  encryptedKey: string;
+};
+
 const table: NextPage = () => {
   const { address } = useStore();
-  const [data, setData] = useState();
+  const [data, setData] = useState<UserData[]>([]);
+
+  const handledecrypt = async (user: UserData) => {
+    try {
+      if (!window.ethereum) throw new Error("wallet not dounf");
+      const res = await window.ethereum.request?.({
+        method: "eth_decrypt",
+        params: [user.encryptedKey, user.address],
+      });
+
+      console.log({ res });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     (async () => {
       const { data: userdata } = await axios.request({
         method: "GET",
-        url: `https://api.nftport.xyz/v0/accounts/${address}?chain=polygon&contract_address=0xDb46d1Dc155634FbC732f92E853b10B288AD5a1d`,
+        url: `https://testnet.tableland.network/query?s=SELECT * FROM files_80001_3098 where address = '${address}'`,
         headers: {
           "Content-Type": "application/json",
-          Authorization: "2e0cc1de-7253-4d3b-80c0-7093ee89fb4c",
         },
       });
 
       setData(userdata);
+      console.log({ address, userdata });
     })();
-  });
+  }, [address]);
 
   return (
     <div className="w-3/4 justify-center mx-10 ">
       <table className="table w-full">
         <thead>
           <tr>
-            <th></th>
             <th>Id</th>
             <th>Address</th>
             <th>CID</th>
@@ -36,32 +58,20 @@ const table: NextPage = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th>1</th>
-            <td>Cy Ganderton</td>
-            <td>Quality Control Specialist</td>
-            <td>Blue</td>
-            <td>Blue</td>
-            <td>Blue</td>
-          </tr>
-
-          <tr>
-            <th>2</th>
-            <td>Hart Hagerty</td>
-            <td>Desktop Support Technician</td>
-            <td>Purple</td>
-            <td>Blue</td>
-            <td>Blue</td>
-          </tr>
-
-          <tr>
-            <th>3</th>
-            <td>Brice Swyre</td>
-            <td>Tax Accountant</td>
-            <td>Red</td>
-            <td>Blue</td>
-            <td>Blue</td>
-          </tr>
+          {data.map((user, i) => (
+            <tr key={i}>
+              <th>{i + 1}</th>
+              <th>{user.address}</th>
+              <th>
+                {user.cid}{" "}
+                <button type="button" onClick={() => handledecrypt(user)}>
+                  decrypt
+                </button>
+              </th>
+              <th>{user.filename}</th>
+              <th>{user.size}</th>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
