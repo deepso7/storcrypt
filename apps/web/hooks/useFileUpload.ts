@@ -74,7 +74,7 @@ export const useFiles = () => {
   });
 };
 
-type UserData = {
+export type UserData = {
   id: number;
   address: string;
   cid: string;
