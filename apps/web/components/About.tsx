@@ -53,7 +53,7 @@ const About = () => {
                 className="p-3 bg--400 bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white  rounded-lg text-center font-medium"
                 key={item.name}
               >
-                <a href={item.url} target="_blank">
+                <a href={item.url} rel="noreferrer" target="_blank">
                   {item.name}
                 </a>
               </span>

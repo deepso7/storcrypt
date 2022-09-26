@@ -1,4 +1,3 @@
-import useStore from "../store/useStore";
 import type { NextPage } from "next";
 import UploadButton from "../components/UploadButton";
 import TableIcons from "../assets/TableIcons";
