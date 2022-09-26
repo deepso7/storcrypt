@@ -63,7 +63,7 @@ const lensLogin = async () => {
 const udLogin = async () => {
   const uauth = new UAuth({
     clientID: "143f21aa-3271-4ada-9fb7-99a5794c0060",
-    redirectUri: "http://localhost:3000",
+    redirectUri: "https://storcrypt.vercel.app",
     scope: "openid wallet",
   });
 
@@ -127,7 +127,9 @@ const siweLogin = async () => {
   }
 };
 
-export const walletLogin = (walletType: "lens" | "ud" | "siwe"): Promise<{address: string, did: string}> => {
+export const walletLogin = (
+  walletType: "lens" | "ud" | "siwe"
+): Promise<{ address: string; did: string }> => {
   const login = {
     lens: lensLogin,
     ud: udLogin,
