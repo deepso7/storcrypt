@@ -38,10 +38,9 @@ const About = () => {
       <div className="flex flex-col gap-4">
         <span className="text-2xl font-bold">What is StorCrypt?</span>
         <p className="text-lg font-medium">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
-          enim dolorem dolores hic eaque harum fugiat blanditiis odit sit!
-          Maiores facere eum distinctio sunt corporis earum deleniti aliquid
-          reiciendis nihil!
+          We are building a file encryption service which allows users to upload their files on IPFS in an encrypted way and will enable them to retrieve them whenever they require
+          We have enabled logging with different DIDs present in the ecosystem to depict the power of composable storage layers like IPFS
+          Also providing a low-level SDK for other developers in the ecosystem to build cool stuff using our micro-service
         </p>
         <div className="flex items-center gap-5 mt-10">
           <span className="text-xl font-semibold italic">
@@ -53,7 +52,7 @@ const About = () => {
                 className="p-3 bg--400 bg-gradient-to-r from-gray-700 via-gray-900 to-black text-white  rounded-lg text-center font-medium"
                 key={item.name}
               >
-                <a href={item.url} target="_blank">
+                <a href={item.url} rel="noreferrer" target="_blank">
                   {item.name}
                 </a>
               </span>
